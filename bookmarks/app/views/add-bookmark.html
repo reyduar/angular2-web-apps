@@ -1,0 +1,54 @@
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>ADD BOOKMARK.</h3>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-bottom: 350px;">
+    <form #myFormulario="ngForm" (ngSubmit)="onSubmit()">
+        <div class="form-group row">
+            <label for="name-input" class="col-xs-2 col-form-label text-left">Name</label>
+            <div class="col-xs-10">
+                <input [(ngModel)]="newBookmark.name" name="name" class="form-control" type="text" placeholder="Bookmark name.." #name="ngModel"
+                aria-describedby="errorBlock1" minlength="5" required>
+                <span *ngIf="!name.valid" id="errorBlock1" class="help-block">*Min length 5 letters</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="author-input" class="col-xs-2 col-form-label text-left">Author</label>
+            <div class="col-xs-10">
+                <input [(ngModel)]="newBookmark.author" name="author" class="form-control" type="text" placeholder="Author name.." #author="ngModel"
+                 aria-describedby="errorBlock2" minlength="10" pattern="[A-Za-z\s]*" required>
+                <span *ngIf="!author.valid" id="errorBlock2" class="help-block">*Only alphabet letters with min length 10 letters</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="description-input" class="col-xs-2 col-form-label text-left">Description</label>
+            <div class="col-xs-10">
+                <input name="description" class="form-control" type="text" placeholder="Description.." #description="ngModel" [(ngModel)]="newBookmark.description">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="type-input" class="col-xs-2 col-form-label text-left">Type</label>
+            <div class="col-xs-10">
+                <input [(ngModel)]="newBookmark.type" name="type" class="form-control" type="text" placeholder="Type bookmark.." #type="ngModel" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-url-input" class="col-xs-2 col-form-label text-left">URL</label>
+            <div class="col-xs-10">
+                <input [(ngModel)]="newBookmark.url" name="url" class="form-control" type="url" placeholder="Url where is the bookmark E.g. https://getbootstrap.com" #url="ngModel"
+                 aria-describedby="errorBlock4" minlength="10" required>
+                <span *ngIf="!url.valid" id="errorBlock4" class="help-block">*Min length 5 letters</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="code-input" class="col-xs-2 col-form-label text-left">Code</label>
+            <div class="col-xs-10">
+                <input name="code" class="form-control" type="text" placeholder="Example source code .." #code="ngModel"  [(ngModel)]="newBookmark.code">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary text-right" [disabled]="!myFormulario.form.valid">Save</button>
+    </form>
+</div>
