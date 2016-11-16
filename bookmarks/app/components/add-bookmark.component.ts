@@ -25,8 +25,8 @@ export class AddBookmarkComponent implements OnInit{
   }
 
   onSubmit(){
-		this._bookmarkService.addBookmark(this.newBookmark);
-		this._router.navigate(["/add"]);
+		//this._bookmarkService.addBookmark(this.newBookmark);
+		//this._router.navigate(["/add"]);
   }
 
 ngOnInit(){

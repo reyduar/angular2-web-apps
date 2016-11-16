@@ -1,7 +1,7 @@
 // ====== ariel duarte ======
-import {Component} from '@angular/core';
-import {Bookmark} from '../model/bookmark';
-import {BookmarkService} from '../services/bookmark.service';
+import { Component, OnInit } from '@angular/core';
+import { Bookmark } from '../model/bookmark';
+import { BookmarkService } from '../services/bookmark.service';
 
 @Component({
     selector: 'bookmarks-list',
@@ -9,20 +9,33 @@ import {BookmarkService} from '../services/bookmark.service';
     providers: [ BookmarkService ]
 })
 
-export class BookmarksListComponent {
+export class BookmarksListComponent implements OnInit{
   public bookmark:Bookmark;
   public bookmarkSelected:Bookmark;
-  public bookmarks:Array<Bookmark>;
+  public bookmarks:Bookmark[];
 
-   constructor(private _bookmarksService: BookmarkService){
-    this.bookmarkSelected = new Bookmark("Curso de Angular 2 Crear web apps desde cero", "Victor Robles", "Udemy", "https://www.udemy.com/curso-de-angular-2-en-espanol-crea-webapps-desde-cero/", "Video", "");
-    this.bookmarks = this._bookmarksService.getBookmarks();
-
-    this.bookmark = this.bookmarks[0];
-   }
+   constructor(private _bookmarksService: BookmarkService){}
 
   selectBookmark(bookmark){
     this.bookmark = bookmark;
     this.bookmarkSelected = bookmark;
+  }
+
+  getBookmarks(){
+    this._bookmarksService.getBookmarks()
+    .subscribe(
+        //Bind to view
+        results => {
+          this.bookmarks = results._embedded.bookmarks;
+        },
+      err => {
+        // Log errors if any
+        console.log(err);
+      });
+  }
+
+  ngOnInit(){
+    this.getBookmarks();
+    this.bookmarkSelected = this.bookmark;
   }
 }
