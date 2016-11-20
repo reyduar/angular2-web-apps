@@ -5,50 +5,64 @@
         </div>
     </div>
 </div>
-<div class="container" style="margin-bottom: 350px;">
-    <form #myFormulario="ngForm" (ngSubmit)="onSubmit()">
-        <div class="form-group row">
-            <label for="name-input" class="col-xs-2 col-form-label text-left">Name</label>
-            <div class="col-xs-10">
-                <input [(ngModel)]="newBookmark.name" name="name" class="form-control" type="text" placeholder="Bookmark name.." #name="ngModel"
-                aria-describedby="errorBlock1" minlength="5" required>
-                <span *ngIf="!name.valid" id="errorBlock1" class="help-block">*Min length 5 letters</span>
-            </div>
+<div class="container mtb" style="margin-bottom: 50px;">
+    <div class="row">
+      <div class="col-lg-8">
+        <h4>Important to read!</h4>
+        <div class="hline"></div>
+        <p>Hey buddy please fill in all the fields in the best way, try to use a rational vocabulary and remember your bookmarks will be useful for others as well as you can find useful to others.</p>
+      </div>
+    </div>
+    <form #myFormulario="ngForm" (ngSubmit)="onSubmit()" role="form">
+        <div class="text-right">
+          <button type="submit" class="btn btn-theme" [disabled]="!myFormulario.form.valid"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
         </div>
-        <div class="form-group row">
-            <label for="author-input" class="col-xs-2 col-form-label text-left">Author</label>
-            <div class="col-xs-10">
-                <input [(ngModel)]="newBookmark.author" name="author" class="form-control" type="text" placeholder="Author name.." #author="ngModel"
-                 aria-describedby="errorBlock2" minlength="10" pattern="[A-Za-z\s]*" required>
-                <span *ngIf="!author.valid" id="errorBlock2" class="help-block">*Only alphabet letters with min length 10 letters</span>
-            </div>
+        <div class="form-group">
+            <label for="name-input">Title</label>
+            <input [(ngModel)]="newBookmark.name" name="name" class="form-control" type="text" placeholder="Bookmark title" #name="ngModel" required>
+            <em class="csmall2" *ngIf="!name.valid">* required entry field</em>
         </div>
-        <div class="form-group row">
-            <label for="description-input" class="col-xs-2 col-form-label text-left">Description</label>
-            <div class="col-xs-10">
-                <input name="description" class="form-control" type="text" placeholder="Description.." #description="ngModel" [(ngModel)]="newBookmark.description">
-            </div>
+        <div class="form-group">
+            <label for="author-input">Author</label>
+            <input [(ngModel)]="newBookmark.author" name="author" class="form-control" type="text" placeholder="Author name" #author="ngModel" pattern="[A-Za-z\s]*" required>
+            <em class="csmall2" *ngIf="!author.valid">* required entry field</em>
         </div>
-        <div class="form-group row">
-            <label for="type-input" class="col-xs-2 col-form-label text-left">Type</label>
-            <div class="col-xs-10">
-                <input [(ngModel)]="newBookmark.type" name="type" class="form-control" type="text" placeholder="Type bookmark.." #type="ngModel" required>
-            </div>
+        <div class="form-group">
+            <label for="type-input">Category</label>
+            <input [(ngModel)]="newBookmark.category" name="category" class="form-control" type="text" placeholder="E.g. Development, Tips and Tricks, Angular2, Code" #category="ngModel" required>
+            <em class="csmall2" *ngIf="!category.valid">* required entry field</em>
         </div>
-        <div class="form-group row">
-            <label for="example-url-input" class="col-xs-2 col-form-label text-left">URL</label>
-            <div class="col-xs-10">
-                <input [(ngModel)]="newBookmark.url" name="url" class="form-control" type="url" placeholder="Url where is the bookmark E.g. https://getbootstrap.com" #url="ngModel"
-                 aria-describedby="errorBlock4" minlength="10" required>
-                <span *ngIf="!url.valid" id="errorBlock4" class="help-block">*Min length 5 letters</span>
-            </div>
+        <div class="form-group">
+            <label for="description-input">Description</label>
+            <textarea rows="5" name="description" class="form-control" type="text" placeholder="Add a description about this bookmark" #description="ngModel" [(ngModel)]="newBookmark.description"></textarea>
+            <em class="csmall2" *ngIf="!name.valid">* required entry field</em>
         </div>
-        <div class="form-group row">
-            <label for="code-input" class="col-xs-2 col-form-label text-left">Code</label>
-            <div class="col-xs-10">
-                <input name="code" class="form-control" type="text" placeholder="Example source code .." #code="ngModel"  [(ngModel)]="newBookmark.code">
-            </div>
+        <div class="form-group">
+            <label for="type-input">Type</label>
+            <input [(ngModel)]="newBookmark.type" name="type" class="form-control" type="text" placeholder="Type E.g. YouTube, Blog, Foro" #type="ngModel" required>
+            <em class="csmall2" *ngIf="!type.valid">* required entry field</em>
         </div>
-        <button type="submit" class="btn btn-primary text-right" [disabled]="!myFormulario.form.valid">Save</button>
+        <div class="form-group">
+            <label for="example-url-input">Web Site</label>
+            <input [(ngModel)]="newBookmark.url" name="url" class="form-control" type="url" placeholder="Web site where is the bookmark E.g. https://getbootstrap.com" #url="ngModel">
+        </div>
+        <div class="form-group">
+            <label for="example-url-input">Image Url</label>
+            <input [(ngModel)]="newBookmark.image" name="image" class="form-control" type="url" placeholder="This image can be a models image or something image about your bookmark e.g. https://scotch.io/wp-content/uploads/2016/10/SeqTHj9kQf6xUkcqxuE1_scotch-http.jpg" #image="ngModel">
+        </div>
+        <div class="form-group">
+            <label for="code-input">Tags</label>
+            <input name="tags" class="form-control" type="text" placeholder="Add tags comma separated e.g. UI, Design, Developer, TypeScript" #tags="ngModel"  [(ngModel)]="newBookmark.tags" required>
+            <em class="csmall2" *ngIf="!tags.valid">* required entry field</em>
+        </div>
+        <div class="form-group">
+            <label for="code-input">Code Example</label>
+            <textarea rows="5" name="code" class="form-control" type="text" placeholder="Add code example here" #code="ngModel"  [(ngModel)]="newBookmark.code"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="code-input">Create Date</label>
+            <input name="createdDT" class="form-control" type="text" placeholder="E.g. April 25, 2014" #createdDT="ngModel"  [(ngModel)]="newBookmark.createdDT" required>
+            <em class="csmall2" *ngIf="!createdDT.valid">* required entry field</em>
+        </div>
     </form>
 </div>

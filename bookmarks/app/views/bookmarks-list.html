@@ -8,46 +8,61 @@
 
 <div class="container">
 
-<div class="row">
-  <div class="col-lg-10 col-lg-offset-1">
-    <div id="custom-search-input">
-        <div class="input-group col-md-12">
-            <input id="input_search_id" type="text" class="form-control input-lg" placeholder="Search bookmarks.." required />
-            <span class="input-group-btn">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            <div id="custom-search-input">
+                <div class="input-group col-md-12">
+                    <input id="input_search_id" type="text" class="form-control input-lg" placeholder="Search bookmarks.." required />
+                    <span class="input-group-btn">
                 <button id="button_search_id" class="btn btn-info btn-lg" type="button">
                     <i class="glyphicon glyphicon-search"></i>
                 </button>
             </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="text-right" style="margin-bottom: 20px; margin-top: 20px;">
+                <a type="button" class="btn btn-theme" [routerLink]="['/add']">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add bookmark
+                </a>
+            </div>
+            <div class="loading">
+              <img src="../../assets/img/loader.gif" alt="Waiting to bookmarks..." *ngIf="loading == 'show'" />
+            </div>
+            <table id="bookmarks-list-id" class="table table-hover">
+                <tbody *ngFor="let bookmark of bookmarks">
+                    <!--Black header card -->
+                    <tr>
+                        <td class="list-group-item-text header-card">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-8 text-left">
+                                    <h4>{{bookmark.name}}</h4>
+                                </div>
+                                <div class="col-xs-6 col-md-4 text-right">
+                                    <div class="btn-group">
+                                        <a [routerLink]="['/details', bookmark.id]" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a>
+                                        <a class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!--Body card result-->
+                    <tr>
+                        <td id="cwrap">
+                            <p class="list-group-item-text">
+                              <span *ngIf="bookmark.author" class="glyphicon glyphicon-user"></span> {{bookmark.author}}
+                              <span *ngIf="bookmark.type" class="glyphicon glyphicon-globe"></span> {{bookmark.type}}
+                              <span *ngIf="bookmark.url" class="glyphicon glyphicon-new-window"></span> <a href="{{bookmark.url}}" target="_blank"> {{bookmark.url}}</a>
+                            </p>
+                            <p *ngIf="bookmark.description" class="list-group-item-text text-justify"><small>Description: {{bookmark.description}}</small></p>
+                            <br />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-  </div>
-  <div class="col-lg-10 col-lg-offset-1">
-    <div class="text-right" style="margin-bottom: 20px; margin-top: 20px;">
-    <a type="button" class="btn btn-primary" [routerLink]="['/add']">
-        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add bookmark
-    </a>
-    </div>
-    <ul class="list-group text-left" style="margin-bottom: 20px;">
-        <li *ngFor="let bookmark of bookmarks" class="list-group-item">
-
-          <div class="row">
-            <div class="col-md-8 text-left">
-              {{bookmark.name}}
-            </div>
-            <div class="col-md-4 text-right">
-              <a class="btn btn-xs btn-primary" [routerLink]="['/add', bookmark.name, bookmark.description, bookmark.author, bookmark.url, bookmark.type, bookmark.code]"><span class="glyphicon glyphicon-new-window"></span></a>
-            </div>
-          </div>
-          <p *ngIf="bookmark.author"><small>Author: {{bookmark.author}}</small></p>
-          <p *ngIf="bookmark.description"><small>Description: {{bookmark.description}}</small></p>
-          <p *ngIf="bookmark.type"><small>Type: {{bookmark.type}}</small></p>
-          <p *ngIf="bookmark.code"><small>Code: {{bookmark.code}}</small></p>
-          <p *ngIf="bookmark.url" ><a href="{{bookmark.url}}" target="_blank"><small>Web Site: {{bookmark.url}}</small></a> </p>
-        </li>
-    </ul>
-  </div>
-</div>
-
-
-
 </div>

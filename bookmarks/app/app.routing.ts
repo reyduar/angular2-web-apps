@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { BookmarksListComponent } from "./components/bookmarks-list.component";
 import { AddBookmarkComponent } from "./components/add-bookmark.component";
+import { BookmarkDetailsComponent } from "./components/bookmark-details.component";
 
 const appRoutes: Routes = [
 	{
@@ -13,6 +14,7 @@ const appRoutes: Routes = [
 	},
 	{ path: "bookmarks", component: BookmarksListComponent },
 	{ path: "add", component: AddBookmarkComponent },
+	{ path: "details/:id", component: BookmarkDetailsComponent },
 	{ path: "add/:name/:author/:description/:url/:type/:code", component: AddBookmarkComponent }
 ];
 

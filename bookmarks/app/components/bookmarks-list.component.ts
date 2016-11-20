@@ -11,22 +11,26 @@ import { BookmarkService } from '../services/bookmark.service';
 
 export class BookmarksListComponent implements OnInit{
   public bookmark:Bookmark;
-  public bookmarkSelected:Bookmark;
   public bookmarks:Bookmark[];
+  public loading:string;
 
    constructor(private _bookmarksService: BookmarkService){}
 
   selectBookmark(bookmark){
     this.bookmark = bookmark;
-    this.bookmarkSelected = bookmark;
   }
 
   getBookmarks(){
+    //let bookmark_table = <HTMLElement>document.querySelector(".loading");
+    //bookmark_table.style.visibility = "visilbe";
+    this.loading = 'show';
     this._bookmarksService.getBookmarks()
     .subscribe(
         //Bind to view
         results => {
           this.bookmarks = results._embedded.bookmarks;
+          this.loading = 'hide';
+          //bookmark_table.style.display = "none";
         },
       err => {
         // Log errors if any
@@ -36,6 +40,5 @@ export class BookmarksListComponent implements OnInit{
 
   ngOnInit(){
     this.getBookmarks();
-    this.bookmarkSelected = this.bookmark;
   }
 }

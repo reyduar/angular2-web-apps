@@ -1,6 +1,6 @@
 // ====== ariel duarte ======
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 // Import Model
 import { Bookmark } from "../model/bookmark";
@@ -27,10 +27,34 @@ export class BookmarkService {
                         // ...and calling .json() on the response to return data
                          .map((res:Response) => res.json())
                          //...errors if any
-                         .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+                         .catch((error:any) => Observable.throw(error.json().error || 'Server error to get bookmarks'));
      }
 
-     addBookmark(){
+     addBookmark(body: Object): Observable<Bookmark[]>{
+      let bodyString = JSON.stringify(body); // Stringify payload
+      let headers      = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+      let options       = new RequestOptions({ headers: headers }); // Create a request option
 
+      return this._http.post(this.serverUrl, body, options) // ...using post request
+                         .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+                         .catch((error:any) => Observable.throw(error.json().error || 'Server error to post bookmark')); //...errors if any
      }
+
+     getBookmarkById(id: string){
+           // ...using get request
+           return this._http.get(this.serverUrl +'/'+id)
+                          // ...and calling .json() on the response to return data
+                           .map((res:Response) => res.json())
+                           //...errors if any
+                           .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+       }
+
+       getBookmarkByName(name: string){
+             // ...using get request
+             return this._http.get(this.serverUrl +'/search/findByName?name='+name)
+                            // ...and calling .json() on the response to return data
+                             .map((res:Response) => res.json())
+                             //...errors if any
+                             .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+         }
 }
