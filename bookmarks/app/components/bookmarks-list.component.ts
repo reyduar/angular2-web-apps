@@ -46,8 +46,7 @@ export class BookmarksListComponent implements OnInit{
   }
 
   deleteBookmark(id:string){
-    let bookmarkOperation:Observable<Bookmark[]>;
-    bookmarkOperation = this._bookmarksService.deleteBookmark(id);
+    this._bookmarksService.deleteBookmark(id)
     bookmarkOperation.subscribe(
         response => {
           this._router.navigate(["bookmarks"]);
