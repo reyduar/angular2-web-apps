@@ -14,6 +14,7 @@ import {Observable} from 'rxjs/Rx';
 
 export class AddBookmarkComponent implements OnInit{
   public newBookmark: Bookmark;
+  public title = "";
   public id = "";
   public nameParam = "";
   public authorParam = "";
@@ -34,7 +35,11 @@ export class AddBookmarkComponent implements OnInit{
   onSubmit(){
     // Variable to hold a reference of addComment/updateComment
     let bookmarkOperation:Observable<Bookmark[]>;
-    bookmarkOperation = this._bookmarkService.addBookmark(this.createNewDocumentBody(this.newBookmark));
+    if(this.id === undefined){
+      bookmarkOperation = this._bookmarkService.addBookmark(this.bookmarkDocumentBody(this.newBookmark));
+    }else{
+      bookmarkOperation = this._bookmarkService.editBookmark(this.id, this.bookmarkDocumentBody(this.newBookmark));
+    }
     // Subscribe to observable
     bookmarkOperation.subscribe(
       response => {
@@ -48,11 +53,9 @@ export class AddBookmarkComponent implements OnInit{
           // Log errors if any
           console.log(err);
         });
-
-
   }
 
-createNewDocumentBody(_newBookmark: Bookmark): Object {
+bookmarkDocumentBody(_newBookmark: Bookmark): Object {
   let body = {
     "name" : _newBookmark.name,
     "author" : _newBookmark.author,
@@ -70,15 +73,28 @@ createNewDocumentBody(_newBookmark: Bookmark): Object {
 
 ngOnInit(){
   this._actroute.params.forEach((params: Params) => {
-    this.nameParam = params['name'];
-    this.authorParam = params['author'];
-    this.categoryParam = params['category'];
-    this.descriptionParam = params['description'];
-    this.urlParam = params['url'];
-    this.typeParam = params['type'];
-    this.tagsParam = params['tags'];
-    this.createdDTParam = params['createdDT'];
+    this.id = params['id'];
     this.newBookmark = new Bookmark(this.id, this.nameParam, this.authorParam, this.descriptionParam,  this.urlParam, this.typeParam, this.codeParam, this.imageParam, this.categoryParam, this.tagsParam, this.createdDTParam);
-    });
+    if(this.id === undefined){
+      this.title = "Add bookmark.";
+    }else{
+      this.title = "Edit bookmark.";
+      this.getBookmark(this.id);
+    }
+  });
+}
+
+  getBookmark(id: string){
+    this._bookmarkService.getBookmarkById(id)
+    .subscribe(
+        //Bind to view
+        results => {
+          this.newBookmark = results;
+        },
+      err => {
+        // Log errors if any
+        console.log(err);
+        this._router.navigate(["bookmarks"]);
+      });
   }
 }

@@ -16,9 +16,9 @@ export class BookmarkService {
   constructor (private _http: Http) {}
 
     // private instance variable to hold base url
-   private serverUrl = 'https://heroku-api-rest.herokuapp.com/bookmarks';
+   //private serverUrl = 'https://heroku-api-rest.herokuapp.com/bookmarks';
    // Local server
-   //private serverUrl = 'http://localhost:8080/bookmarks';
+   private serverUrl = 'http://localhost:8080/bookmarks';
 
    // Fetch all existing Bookmarks
    getBookmarks(){
@@ -37,7 +37,23 @@ export class BookmarkService {
 
       return this._http.post(this.serverUrl, body, options) // ...using post request
                          .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
-                         .catch((error:any) => Observable.throw(error.json().error || 'Server error to post bookmark')); //...errors if any
+                         .catch((error:any) => Observable.throw(error.json().error || 'Server error to add bookmark')); //...errors if any
+     }
+
+     editBookmark(id:string, body: Object): Observable<Bookmark[]>{
+      let bodyString = JSON.stringify(body); // Stringify payload
+      let headers      = new Headers({ 'Content-Type': 'application/json' }); // ... Set content type to JSON
+      let options       = new RequestOptions({ headers: headers }); // Create a request option
+
+      return this._http.put(this.serverUrl+"/"+id, body, options) // ...using post request
+                         .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+                         .catch((error:any) => Observable.throw(error.json().error || 'Server error to edit bookmark')); //...errors if any
+     }
+
+     deleteBookmark(id:string): Observable<Bookmark[]>{
+      return this._http.delete(`${this.serverUrl}/${id}`) // ...using post request
+                         .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+                         .catch((error:any) => Observable.throw('delete bookmark')); //...errors if any
      }
 
      getBookmarkById(id: string){

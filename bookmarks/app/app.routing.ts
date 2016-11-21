@@ -15,7 +15,7 @@ const appRoutes: Routes = [
 	{ path: "bookmarks", component: BookmarksListComponent },
 	{ path: "add", component: AddBookmarkComponent },
 	{ path: "details/:id", component: BookmarkDetailsComponent },
-	{ path: "add/:name/:author/:description/:url/:type/:code", component: AddBookmarkComponent }
+	{ path: "edit/:id", component: AddBookmarkComponent }
 ];
 
 export const appRoutingProviders: any[] = [];

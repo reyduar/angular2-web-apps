@@ -1,7 +1,7 @@
 <div id="blue">
     <div class="container">
         <div class="row">
-            <h3>HOME.</h3>
+            <h3>Home.</h3>
         </div>
     </div>
 </div>
@@ -42,8 +42,8 @@
                                 <div class="col-xs-6 col-md-4 text-right">
                                     <div class="btn-group">
                                         <a [routerLink]="['/details', bookmark.id]" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-search"></span></a>
-                                        <a class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
-                                        <a class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a [routerLink]="['/edit', bookmark.id]" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a (click)="deleteBookmark(bookmark.id)" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-trash"></span></a>
                                     </div>
                                 </div>
                             </div>

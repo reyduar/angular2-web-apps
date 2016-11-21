@@ -2,6 +2,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Bookmark } from '../model/bookmark';
 import { BookmarkService } from '../services/bookmark.service';
+import { Router } from '@angular/router';
+
+import {Observable} from 'rxjs/Rx';
 
 @Component({
     selector: 'bookmarks-list',
@@ -14,7 +17,7 @@ export class BookmarksListComponent implements OnInit{
   public bookmarks:Bookmark[];
   public loading:string;
 
-   constructor(private _bookmarksService: BookmarkService){}
+   constructor(private _bookmarksService: BookmarkService, private _router: Router){}
 
   selectBookmark(bookmark){
     this.bookmark = bookmark;
@@ -40,5 +43,19 @@ export class BookmarksListComponent implements OnInit{
 
   ngOnInit(){
     this.getBookmarks();
+  }
+
+  deleteBookmark(id:string){
+    let bookmarkOperation:Observable<Bookmark[]>;
+    bookmarkOperation = this._bookmarksService.deleteBookmark(id);
+    bookmarkOperation.subscribe(
+        response => {
+          this._router.navigate(["bookmarks"]);
+          this.getBookmarks();
+        },
+      err => {
+        this._router.navigate(["bookmarks"]);
+        this.getBookmarks();
+      });
   }
 }
